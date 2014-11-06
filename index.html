@@ -78,7 +78,7 @@
 
       var url = TxParser.baseurl + $txid;
       var req = $.getJSON(url, function(res){
-        console.log(res.data);
+
         // var tx = res.data.tx;
         var tx = new TxParser(res.data)
         if (tx.confirmations > 0) {
@@ -91,7 +91,6 @@
 
       req.fail(function(data){
         $('.spinner').hide();
-        console.log(data);
         switch (data.status) {
           case 400:
           case 404:

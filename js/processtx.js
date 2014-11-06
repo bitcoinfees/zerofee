@@ -36,7 +36,6 @@ switch (provider) {
     TxParser.homepage = "https://helloblock.io"
 }
 
-
 function processTx(tx) {
   var dPriority = 0;
   var inputAmounts = 0;
@@ -69,7 +68,6 @@ function processTx(tx) {
         isOrphan = true;
         orphanDeps.push(prevoutTx.txid);
       }
-
       dPriority += amount*prevoutTx.confirmations;
       inputAmounts += amount;
     });   
@@ -82,7 +80,6 @@ function processTx(tx) {
       if (--countdown === 0) 
         complete();
     });
-
   });
 
   var complete = function() {
@@ -95,10 +92,7 @@ function processTx(tx) {
 
       for(n = 0; n < tx.numOutputs; n++) {
         fees -= tx.getOutputAmount(n);
-        console.log(n);
-        console.log(tx);
       }
-
 
       fees = Math.max(0,fees);
       feeRate = fees / nTxSize * 1000;      
@@ -127,84 +121,9 @@ function processTx(tx) {
         }
       }
       if (isOrphan) {
-        appendText('However, this transaction has <b>' + orphanDeps.length + ' unconfirmed input' + ((orphanDeps.length > 1) ? 's':'') + '</b>, so its confirmation time will depend on those transaction(s) being confirmed first.<br><br>')
-        
+        appendText('However, this transaction has <b>' + orphanDeps.length + ' unconfirmed input' + ((orphanDeps.length > 1) ? 's':'') + '</b>, so its confirmation time will depend on those transaction(s) being confirmed first.<br><br>');        
       }
       appendText('<a href=' + TxParser.prettyurl + tx.txid + '>Link to transaction</a><br><br>')
     }
-  };
+  }
 }
-
-
-
-
-
-
-// -----------------
-
-//   var vinTxids = tx.vin.map(function(vinput){
-//     return vinput.txid; 
-//   });
-//   var url = baseurl + vinTxids.join(',')
-
-//   var req = $.getJSON(url, function(res) {
-//     console.log(res);
-//     $('.spinner').hide();
-//     var prevoutTxs;
-
-//     if (vinTxids.length > 1)
-//       prevoutTxs = res.data.map(function(item) {return item.tx});
-//     else
-//       prevoutTxs = [res.data.tx];
-
-//     var offset, n, amount, confirmations;
-//     // Calculate modified size for priority.
-//     // https://github.com/bitcoin/bitcoin/blob/v0.9.3/src/core.cpp#L121
-//     tx.vin.forEach(function(vinput, vinIdx) {
-//       offset = 41 + Math.min(110, vinput.scriptSig.hex.length/2);
-//       if (modTxSize > offset)
-//         modTxSize -= offset;
-
-//       n = vinput.vout;
-//       amount = prevoutTxs[vinIdx].vout[n].value;
-      
-//       if (!prevoutTxs[vinIdx].hasOwnProperty('confirmations')) {
-//         // This input tx is still unconfirmed.
-//         confirmations = 0;
-//         isOrphan = true;
-//       }
-//       else
-//         confirmations = prevoutTxs[vinIdx].confirmations;
-
-//       dPriority += amount*prevoutTxs[vinIdx].confirmations;
-//       fees += amount;
-//       console.log(amount);
-//     });
-
-//     tx.vout.forEach(function(voutput) {
-//       fees -= voutput.value;
-//     });
-
-//     dPriority = dPriority / modTxSize;
-//     feeRate = fees / nTxSize * 1000;
-//     console.log(fees);
-//     console.log(nTxSize);
-//     appendText('This transaction has a fee rate of ' + feeRate.toFixed(8) + ' BTC per KB.');
-
-//     if (feeRate > minFeeRate) {
-//       appendText('<br>This is greater than <a href=' + minFeeReference + '> 0.00001000</a> BTC, so it probably qualifies as a <b>paid</b> transaction.');
-//     } else {
-//       appendText('<br>This is less than <a href=' + minFeeReference + '> 0.00001000</a> BTC, so it probably counts as a <b>zero-fee</b> transaction.')
-//     }
-
-
-
-    
-//   });
-
-//   req.fail(function(data){
-//     $('.spinner').hide();
-//     showText('Oops looks like there is an unknown problem, sorry.')
-//   });
-
-// }
