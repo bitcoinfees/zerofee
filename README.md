@@ -8,3 +8,5 @@ A JavaScript tool that calculates the [Priority](https://en.bitcoin.it/wiki/Tran
 Data is obtained through the [helloblock.io](https://helloblock.io) API.
 
 This software is released under the MIT License. The information provided is not guaranteed to be accurate; use at your own risk.
+
+GitHub repo: <https://github.com/bitcoinfees/zerofee>
