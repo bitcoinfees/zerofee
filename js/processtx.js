@@ -97,7 +97,7 @@ function processTx(tx) {
       fees = Math.max(0,fees);
       feeRate = fees / nTxSize * 1000;      
 
-      appendText('This transaction has a fee rate of <b>' + feeRate.toFixed(8) + ' BTC per KB</b>.<br>');
+      appendText('This transaction has a fee rate of <b>' + feeRate.toFixed(8) + ' BTC per kB</b>.<br>');
 
       if (feeRate >= minFeeRate) {
         appendText('This is greater than <a href=' + minFeeReference + '>0.00001000</a> BTC, so it probably qualifies as a <b>paid</b> transaction, and should be confirmed soon.<br>');
