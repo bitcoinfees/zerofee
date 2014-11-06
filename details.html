@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Priority Calculator</title>
+  <style type="text/css">
+    #heading {
+      text-decoration: none;
+      color: #000;
+    }
+  </style>
+</head>
+<body>
+  <h1><a href="index.html" id="heading">Bitcoin Zero-Fee Priority Calculator</a></h1>
+  <h3>
+    What is Transaction Priority?
+  </h3>
+  <p>Transactions generally get included in a block for one of two reasons:</p>
+  <ol>
+    <li>Transaction Fee</li>
+    <li>Transaction Priority</li>
+  </ol>
+  <p>
+    The transaction fee is the main criteria, but if there is no fee, 
+    the transactions needs to have a high enough Priority:
+  </p>
+  <ul>
+    <li>Priority is related to the 'age' of the bitcoins you are spending.</li>
+    <li>The older the bitcoins (i.e. number of confirmations), the higher the priority.</li>
+    <li>The larger the number of bitcoins, and the smaller the transaction size, the higher the priority.</li>
+  </ul>
+  <p>
+    As an example, if you are sending a 1 BTC transaction, the previous transaction needs to be 
+    roughly 1 day old to have sufficient priority.
+  </p>
+  <p> See <a href="https://en.bitcoin.it/wiki/Transaction_fees#Technical_info">here</a> 
+    for details on how priority is computed.<br><br></p>
+
+  <h3>How much fee should I pay?</h3>
+  <p>
+    Miners typically sort transactions according to Fee Rate (fee per unit transaction size)
+    and include higher fee rate transactions until their maximum block size is reached, or the transaction is 
+    below the minimum fee rate. As of Nov 2014 the min fee rate is typically 0.00001000 BTC per kB.
+  </p>
+  <p>
+    In the future, Bitcoin clients will be able to tell you the optimal fee for getting confirmations, but for now
+    they're mostly hardcoded with respect to the min fee rate.
+  </p>
+</body>
+</html>

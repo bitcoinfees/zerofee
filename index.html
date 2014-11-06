@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Priority Calculator</title>
+  <style type="text/css">
+    #result {
+      visibility: hidden;
+      width: 800px;
+      height: 400px;
+      /*background-color: #eeeeee*/
+    }
+    #heading {
+      text-decoration: none;
+      color: #000;
+    }
+    #footer {
+      border-top: 1px solid black;
+      visibility: hidden;
+    }
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+    li {
+      display: inline;
+      margin: 15px;
+    }
+  </style>
+</head>
+<body>
+  <h1><a href="index.html" id="heading">Bitcoin Zero-Fee Priority Calculator</a></h1>
+  <p>Check how much longer it will take for your zero-fee transaction to be confirmed. <a href="details.html">Details.</a></p>
+  <form id="txidform">
+    <h4>Enter transaction ID (hash):</h4>
+    <input type="text" id="txid" size="90" placeholder="4a4a6cbb320483951c27f ...">
+    <input type="submit" id="btn" value="Go">
+  </form>
+  <div id="result">
+    <h4>Result:</h4>
+    <p id="resulttext"></p>
+  </div>
+  <div id="footer">
+    <ul>
+      <li id="provider">Data by </li>
+      <li><a href="disclaimer.html">Disclaimer</a></li>
+      <li><a href="#">Github</a></li>
+      <li><a href="https://github.com/bitcoinfees">Contact</a></li>
+      <li>(c) 2014 bitcoinfees</li>
+    </ul>
+  </div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script src="js/spin.min.js"></script>
+  <script src="js/processtx.js"></script>
+  <script type="text/javascript">
+    var target = document.getElementById('result');
+    var spinner = new Spinner({position:'relative', top: '20%', left: '30%'}).spin(target);
+    
+    $("#provider").append("<a href=" + TxParser.homepage + '>' + provider + '</a>');
+
+    $(document).ready(function() {
+      $('#footer').css('visibility','visible');
+    });  
+
+    function appendText(s) {
+      $('#result p').append(s);
+    }
+
+    $('#txidform').submit(function (e) {
+      e.preventDefault();
+      $('#result p').text('');
+
+      var $txid = $('#txid').val().trim();
+      if (!$txid) {  
+        $('#result').css('visibility','hidden');
+        return;
+      }
+
+      var url = TxParser.baseurl + $txid;
+      var req = $.getJSON(url, function(res){
+        console.log(res.data);
+        // var tx = res.data.tx;
+        var tx = new TxParser(res.data)
+        if (tx.confirmations > 0) {
+          appendText("This transaction has already received " + tx.confirmations + " confirmations.");
+          $('.spinner').hide();
+        }
+        else
+          processTx(tx);      
+      });
+
+      req.fail(function(data){
+        $('.spinner').hide();
+        console.log(data);
+        switch (data.status) {
+          case 400:
+          case 404:
+            $('#result p').text('Transaction not found! Either '+provider+' doesn\'t know about this transaction, or the ID was entered wrongly.');
+            break;
+          default:
+            $('#result p').text('There appears to be a network error. Please check your connection or try again later.');
+        }        
+      }); 
+
+      
+      $('#result').css('visibility','visible');
+      $('.spinner').show();     
+    });
+  </script>
+</body>
+</html>
