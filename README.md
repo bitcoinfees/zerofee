@@ -3,6 +3,8 @@ Bitcoin Zero-Fee Priority Calculator
 
 (c) 2014 bitcoinfees
 
+Note: This no longer works as the API provider has gone offline.
+
 A JavaScript tool that calculates the [Priority](https://en.bitcoin.it/wiki/Transaction_fees#Technical_info) of unconfirmed transactions in the mempool, and provides estimates on when Priority becomes sufficiently high for inclusion in a block.
 
 Data is obtained through the [helloblock.io](https://helloblock.io) API.
